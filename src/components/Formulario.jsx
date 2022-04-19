@@ -3,6 +3,10 @@ import '../index.css'
 
 
 const Formulario = () => {
+
+    const [nombre,setNombre] = useState ('');
+
+
   return (
     <div className='md:w-1/2 lg:w-2/5 mb-5 ' >
         <h2 className='font-black text-3xl text-center'  >formulario</h2>
@@ -18,6 +22,8 @@ const Formulario = () => {
                 <input id='mascota' type="text" 
                 placeholder='nombre mascota'
                 className='border-2 w-full p-2 mt-2 rounded-md'
+                value={nombre}
+                onChange={(e)=>setNombre(e.target.value)}
                 />
             </div>
             <div className='mb-5'>
