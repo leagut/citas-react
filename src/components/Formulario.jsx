@@ -1,9 +1,9 @@
 import {useState, useEffect} from 'react'
 import Error from './Error';
 import '../index.css'
+import './tra.css'
 
-
-const Formulario = ({setPacientes,pacientes,paciente}) => {
+const Formulario = ({setPacientes,pacientes,paciente,setPaciente}) => {
 
     const [nombre,setNombre] = useState ('');
     const [propietario,setPropietario] = useState ('');
@@ -45,15 +45,27 @@ const Formulario = ({setPacientes,pacientes,paciente}) => {
                     propietario,
                     email,
                     fecha,
-                    sintomas
+                    sintomas,
+                    
                 }
 
-                if (paciente.id){
-                        objetoPaciente.id=paciente.id
+                if(paciente.id){
+                    //editando el registro
+                    objetoPaciente.id=paciente.id
+
+                    const pacientesActualizados = pacientes.map(pacienteState=> pacienteState.id === paciente.id ? objetoPaciente : pacienteState)
+
+                    setPacientes(pacientesActualizados)
+                    setPaciente({})
+
                 }else{
-                    objetoPaciente.id = generarId();
+                    //nuevo registro
+                    objetoPaciente.id=generarId();
                     setPacientes([...pacientes,objetoPaciente]);
                 }
+                
+                
+                
 
                 
                 //reinicia el formulario
@@ -68,7 +80,7 @@ const Formulario = ({setPacientes,pacientes,paciente}) => {
 
 
 return (
-    <div className='md:w-1/2 lg:w-2/5 mx-5 ' >
+    <div className='md:w-1/2 lg:w-2/5 mx-5  ' >
         <h2 className='font-black text-3xl text-center'  >formulario</h2>
 
         <p className='text-lg text-center mt-5 '>
@@ -76,7 +88,7 @@ return (
             <span className='text-indigo-400 font-bold ' >Administralos</span>
         </p>
 
-        <form onSubmit={handleSubmit} className='bg-white shadow-md rounded-md py-5 px-5 border-2 border-indigo-100'>
+        <form onSubmit={handleSubmit} className='bg-white shadow-md rounded-md py-5 px-5 border-2 border-indigo-100 transpa'>
 
             { error &&  <Error  mensaje='Hay que llenar todos los campos'/>
                 
@@ -92,7 +104,7 @@ return (
                 />
             </div>
             <div className='mb-5'>
-                <label htmlFor='propietario' className='block uppercase font-bold '  >Propietario</label>
+                <label htmlFor='propietario' className='block uppercase font-bold ' >Propietario</label>
                 <input id='propietario' type="text" 
                 placeholder='nombre propietario'
                 className='border-2 w-full p-2 mt-2 rounded-md'

@@ -1,0 +1,15 @@
+.bk{
+    
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-image:url(../../veterinario-medico-perro-gato-mostrador-clinica-veterinaria_36082-523.webp);
+    background-color: rgba(210, 169, 233, 0.726);
+}
+
+.center2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}

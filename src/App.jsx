@@ -1,27 +1,51 @@
 import Formulario from "./components/Formulario"
 import Header from "./components/Header"
 import ListadoPacientes from "./components/ListadoPacientes"
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
+import './components/bck.css'
 
 function App() {
 
     const [pacientes,setPacientes] = useState ([]);
     const [paciente,setPaciente] = useState ({});
 
-   return (
+    useEffect(() => {  
+      const obtenerLS = () => {
+        const pacientesLS = JSON.parse(localStorage.getItem('pacientes'))??[];
+        setPacientes(pacientesLS)
+      }
+      obtenerLS();
+    }, [])
+    
 
+    useEffect(() => {
+      localStorage.setItem('pacientes',JSON.stringify(pacientes));
+    }, [pacientes])
+    
 
+    const eliminarPaciente = id => {
+      const pacientesActualizados = pacientes.filter(paciente => paciente.id !== id);
+      setPacientes(pacientesActualizados);
+    }
 
-    <div className="container mx-auto mt-20" >
-        <Header  />
+  return (
 
-        <div className="mt-12 md:flex">
-        <Formulario pacientes={pacientes}  setPacientes={setPacientes} paciente={paciente}  />
-        <ListadoPacientes pacientes={pacientes} setPaciente={setPaciente} />
-        </div>
-
+    <div className="bk">
         
-    </div>  
+      <div className="container mx-auto mt-20 " >
+          <Header  />
+
+          <div className="mt-12 md:flex">
+          <Formulario pacientes={pacientes}  setPacientes={setPacientes} paciente={paciente} setPaciente={setPaciente}  />
+          <ListadoPacientes pacientes={pacientes} setPaciente={setPaciente} eliminarPaciente={eliminarPaciente}/>
+          </div>
+
+          
+      </div> 
+
+    </div>
+
+
   )
 }
 
